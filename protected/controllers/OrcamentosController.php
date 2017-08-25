@@ -56,16 +56,10 @@ class OrcamentosController extends Controller
                     $model->setAttribute('valorTotal', $materiais->valor * $_POST['quantidade']);
 
                     array_push($_SESSION['itens'], $model);
-                    $_SESSION['provider'] = new CArrayDataProvider( [
-                                                    'allModels' => $_SESSION['itens'],
-                                                    'pagination' => [
-                                                        'pageSize' => 10,
-                                                    ],
-                                                    'sort' => [
-                                                        'attributes' => ['materiaisId', 'nome'],
-                                                    ],
-                                                ]);
-
+                    $_SESSION['provider'] = new CArrayDataProvider($_SESSION['itens']);
+                    
+                    $_SESSION['provider']->keyField = 'materiaisId';
+ 
                     $resp['code'] = 200;
                     $resp['msg'] = 'Operação Realizada com sucesso!';
 
