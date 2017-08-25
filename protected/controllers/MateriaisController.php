@@ -7,11 +7,20 @@ class MateriaisController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
+        
+        public $_unidades = array();
 
 	/**
 	 * @var CActiveRecord the currently loaded data model instance.
 	 */
 	private $_model;
+        
+        public function __construct($id, $module = null) {
+            
+            $list = array('UN'=>'Unidade', 'LT'=>'Litro', 'CX'=>'Caixa', 'MT'=>'Metro', 'KG'=>'Quilo');    
+            array_push($this->_unidades, $list);
+            parent::__construct($id, $module);
+        }
 
 	/**
 	 * @return array action filters
@@ -31,17 +40,9 @@ class MateriaisController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','index','view','admin','delete'),
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -74,7 +75,7 @@ class MateriaisController extends Controller
 		{
 			$model->attributes=$_POST['materiais'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->materiaisId));
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('create',array(
@@ -97,7 +98,7 @@ class MateriaisController extends Controller
 		{
 			$model->attributes=$_POST['materiais'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->materiaisId));
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('update',array(
@@ -118,7 +119,7 @@ class MateriaisController extends Controller
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
-				$this->redirect(array('index'));
+				$this->redirect(array('admin'));
 		}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');

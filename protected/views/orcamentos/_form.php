@@ -5,54 +5,50 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'clientesId'); ?>
-		<?php echo $form->textField($model,'clientesId'); ?>
+	<div class="form-group row">
+		<?php echo $form->labelEx($model,'clientesId', array('class'=>'control-label col-md-2 col-sm-2 col-xs-12')); ?>
+            <div class="col-md-10 col-sm-10 col-xs-12">
+		<?php echo $form->dropdownList($model,'clientesId', CHtml::listData(clientes::model()->findAll(), 'clientesId', 'nome'), array('empty'=>'')); ?>
 		<?php echo $form->error($model,'clientesId'); ?>
+            </div>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'nomeCliente'); ?>
-		<?php echo $form->textField($model,'nomeCliente',array('size'=>60,'maxlength'=>80)); ?>
-		<?php echo $form->error($model,'nomeCliente'); ?>
+	<div class="form-group row">
+                <?php echo $form->labelEx($model,'telefoneCliente', array('class'=>'control-label col-md-2 col-sm-2 col-xs-12')); ?>
+            <div class="col-md-10 col-sm-10 col-xs-12">
+                <?php echo $form->textField($model,'telefoneCliente',array('size'=>20,'maxlength'=>20)); ?>
+                <?php echo $form->error($model,'telefoneCliente'); ?>
+            </div>
 	</div>
+    
+        <div class="form-group row">
+                <?php echo $form->labelEx($model,'validade', array('class'=>'control-label col-md-2 col-sm-2 col-xs-12')); ?>
+            <div class="col-md-10 col-sm-10 col-xs-12">
+                <?php echo $form->dateField($model,'validade'); ?>
+                <?php echo $form->error($model,'validade'); ?>
+            </div>
+        </div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'telefoneCliente'); ?>
-		<?php echo $form->textField($model,'telefoneCliente',array('size'=>20,'maxlength'=>20)); ?>
-		<?php echo $form->error($model,'telefoneCliente'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'validade'); ?>
-		<?php echo $form->textField($model,'validade'); ?>
-		<?php echo $form->error($model,'validade'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'valorMaterial'); ?>
-		<?php echo $form->textField($model,'valorMaterial'); ?>
-		<?php echo $form->error($model,'valorMaterial'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'valorMO'); ?>
-		<?php echo $form->textField($model,'valorMO'); ?>
+	<div class="form-group row">
+		<?php echo $form->labelEx($model,'valorMO', array('class'=>'control-label col-md-2 col-sm-2 col-xs-12')); ?>
+            <div class="col-md-10 col-sm-10 col-xs-12">
+		<?php echo $form->textField($model,'valorMO', array('class'=>'money')); ?>
 		<?php echo $form->error($model,'valorMO'); ?>
+            </div>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'valorTotal'); ?>
-		<?php echo $form->textField($model,'valorTotal'); ?>
+	<div class="form-group row">
+		<?php echo $form->labelEx($model,'valorTotal', array('class'=>'control-label col-md-2 col-sm-2 col-xs-12')); ?>
+            <div class="col-md-10 col-sm-10 col-xs-12">
+		<?php echo $form->textField($model,'valorTotal', array('class'=>'money')); ?>
 		<?php echo $form->error($model,'valorTotal'); ?>
+            </div>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton('Salvar', array('class'=>'btn btn-default')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

@@ -29,12 +29,12 @@ $this->pageTitle=Yii::app()->name;
                         <i class="fa fa-money fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?php echo $this->getQtdeVendas(); ?></div>
+                        <div class="huge"></div>
                         <div>Vendas Totais</div>
                     </div>
                 </div>
             </div>
-            <a href="<?php echo Yii::app()->createUrl('vendas/admin'); ?>">
+            <a href="<?php echo Yii::app()->createUrl('usuarios/admin'); ?>">
                 <div class="panel-footer">
                     <span class="pull-left">Detalhes</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -53,12 +53,12 @@ $this->pageTitle=Yii::app()->name;
                         <i class="fa fa-star fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?php echo $this->getQtdeSorteios(); ?></div>
+                        <div class="huge"></div>
                         <div>Sorteios Totais</div>
                     </div>
                 </div>
             </div>
-            <a href="<?php echo Yii::app()->createUrl('sorteios/admin'); ?>">
+            <a href="<?php echo Yii::app()->createUrl('clientes/admin'); ?>">
                 <div class="panel-footer">
                     <span class="pull-left">Detalhes</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

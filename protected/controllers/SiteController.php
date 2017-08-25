@@ -29,7 +29,11 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+                if (!Yii::app()->user->isGuest) {
+                    $this->render('index');                 
+                } else {
+                    $this->actionLogin();
+                }
 	}
 
 	/**
@@ -78,6 +82,8 @@ class SiteController extends Controller
 	public function actionLogin()
 	{
 		$model=new LoginForm;
+                
+                $this->layout = 'login';
 
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')

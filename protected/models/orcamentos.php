@@ -51,6 +51,7 @@ class orcamentos extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'clientes'=>array(self::BELONGS_TO, 'clientes', 'clientesId'),
 		);
 	}
 
@@ -60,13 +61,13 @@ class orcamentos extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'orcamentosId' => 'Orcamentos',
-			'clientesId' => 'Clientes',
+			'orcamentosId' => 'Código',
+			'clientesId' => 'Cliente',
 			'nomeCliente' => 'Nome Cliente',
 			'telefoneCliente' => 'Telefone Cliente',
 			'validade' => 'Validade',
 			'valorMaterial' => 'Valor Material',
-			'valorMO' => 'Valor Mo',
+			'valorMO' => 'Valor Mão Obra',
 			'valorTotal' => 'Valor Total',
 		);
 	}

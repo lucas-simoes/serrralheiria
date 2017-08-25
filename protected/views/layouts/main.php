@@ -36,16 +36,16 @@
                 <div class="col-md-3 left_col">
                     <div class="left_col scroll-view">
                         <div class="navbar nav_title" style="border: 0;">
-                            <a href="<?php echo Yii::app()->baseUrl; ?>" class="site_title"><i class="fa fa-gift" aria-hidden="true"></i> <span>Assistec Sorteios</span></a>
+                            <a href="<?php echo Yii::app()->baseUrl; ?>" class="site_title"><i class="fa fa-building" aria-hidden="true"></i> <span>Serralheria Almeida</span></a>
                         </div>
 
                         <div class="clearfix"></div>
 
                         <!-- menu profile quick info -->
                         <div class="profile clearfix">
-                            <!--<div class="profile_pic">
-                                <img src="<?php //echo Yii::app()->user->avatar; ?>" alt="..." class="img-circle profile_img">
-                            </div>-->
+                            <div class="profile_pic">
+                                <img src="<?php echo Yii::app()->user->avatar; ?>" alt="..." class="img-circle profile_img">
+                            </div>
                             <div class="profile_info">
                                 <span>Bem Vindo,</span>
                                 <h2><?php echo !Yii::app()->user->isGuest?Yii::app()->user->Nome:'Visitante'; ?></h2>
@@ -64,34 +64,25 @@
                                             array('label'=>'<i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard', 
                                                   'url'=>array('/site/index')),
                                         
-                                            array('label'=>'<i class="fa fa-gift"></i> Brindes<span class="fa fa-chevron-down">', 
-                                                'url'=>'javascript:void(0);', 
-                                                'items' =>array(
-                                                    array('label'=>'Novo Brinde', 
-                                                          'url'=>array('brindes/create')),
-                                                    array('label'=>'Lista de Brindes', 
-                                                          'url'=>array('brindes/admin')),
-                                                ),
-                                            ),
+                                            array('label'=>'<i class="fa fa-users" aria-hidden="true"></i> Clientes<span class="fa fa-chevron-down">',
+                                                  'url'=>'javascript:void(0);',
+                                                  'items' =>array(
+                                                    array('label'=>'Novo Cliente', 
+                                                          'url'=>array('clientes/create')),
+                                                    array('label'=>'Lista de Clientes', 
+                                                          'url'=>array('clientes/admin')),
+                                                ),  
+                                            ), 
                                         
-                                            array('label'=>'<i class="fa fa-truck"></i> Fornecedores<span class="fa fa-chevron-down">', 
-                                                'url'=>'javascript:void(0);', 
-                                                'items' =>array(
-                                                    array('label'=>'Novo Fornecedor', 
-                                                          'url'=>array('fornecedores/create')),
-                                                    array('label'=>'Lista de Fornecedores', 
-                                                          'url'=>array('fornecedores/admin')),
-                                                ),
-                                            ),
-                                        
-                                            array('label'=>'<i class="fa fa-star" aria-hidden="true"></i> Sorteios',
-                                                  'url'=>array('sorteios/admin')),
-                                        
-                                            array('label'=>'<i class="fa fa-money" aria-hidden="true"></i> Vendas',
-                                                  'url'=>array('vendas/admin')), 
-                                        
-                                            array('label'=>'<i class="fa fa-users" aria-hidden="true"></i> Clientes',
-                                                  'url'=>array('clientes/admin')), 
+                                            array('label'=>'<i class="fa fa-tags" aria-hidden="true"></i> Materiais<span class="fa fa-chevron-down">',
+                                                  'url'=>'javascript:void(0);',
+                                                  'items' =>array(
+                                                    array('label'=>'Novo Material', 
+                                                          'url'=>array('materiais/create')),
+                                                    array('label'=>'Lista de Materiais', 
+                                                          'url'=>array('materiais/admin')),
+                                                ),  
+                                            ), 
                                         
                                             array('label'=>'<i class="fa fa-user"></i> Usuários<span class="fa fa-chevron-down">', 
                                                 'url'=>'javascript:void(0);', 
@@ -101,11 +92,7 @@
                                                     array('label'=>'Lista de Usuários', 
                                                           'url'=>array('usuarios/admin')),
                                                 ),
-                                            ),
-                                                                                        
-                                            /*array('label'=>'<i class="fa fa-building" aria-hidden="true"></i> Cidades Atendidas',
-                                                  'url'=>array('/fran_cidades/cidades'),
-                                                  'visible'=> !Yii::app()->user->isAdmin),*/                                          
+                                            ),                                     
                                         
                                             array('label'=>'<i class="fa fa-sign-in" aria-hidden="true"></i> Login', 
                                                   'url'=>array('/site/login'), 
@@ -152,17 +139,11 @@
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="">
                                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        <img src="<?php //echo Yii::app()->user->avatar; ?>" alt=""><?php echo !Yii::app()->user->isGuest?Yii::app()->user->Nome:'Visitante'; ?>
+                                        <img src="<?php echo Yii::app()->user->avatar; ?>" alt=""><?php echo !Yii::app()->user->isGuest?Yii::app()->user->Nome:'Visitante'; ?>
                                         <span class=" fa fa-angle-down"></span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                        <!--<li><a href="javascript:;"> Perfil</a></li>
-                                        <li>
-                                            <a href="javascript:;">
-                                                <span>Configurações</span>
-                                            </a>
-                                        </li>
-                                        <li><a href="javascript:;">Help</a></li>-->
+                                        <li><a href="<?php echo Yii::app()->createUrl('usuarios/ChangePass', array('id'=>Yii::app()->user->UserID)); ?>"><i class="fa fa-key pull-right"></i> Alterar Senha</a></li>
                                         <li><a href="<?php echo Yii::app()->createUrl('site/logout'); ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                                     </ul>
                                 </li>
@@ -238,7 +219,7 @@
                 <!-- /top navigation -->
 
                 <!-- page content -->
-                <div class="right_col" role="main">
+                <div class="right_col" role="main" id="principal">
 
                     <?php echo $content; ?>
 
@@ -248,7 +229,7 @@
                 <!-- footer content -->
                 <footer>
                     <div class="pull-right">
-                        Assistec Sorteios - Powered by <a href="http://solucoesquefacilitam.com.br/">Creative Solutions</a>
+                        Serralheria Almeida - Powered by <a href="http://solucoesquefacilitam.com.br/">Creative Solutions</a>
                     </div>
                     <div class="clearfix"></div>
                 </footer>
@@ -302,11 +283,18 @@
         <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
         <script type="text/javascript">
             $(function() {
                 $(".chzn-select").chosen();
             });
+            $('.money').mask("####0.00", {reverse: true});
         </script>
+        <script type="text/javascript">
+            var altura = ($(document).height() - 200) + 'px';
+            document.getElementById("principal").style.minHeight = altura;
+        </script>
+        
     </body>
 </html>
 

@@ -47,6 +47,7 @@ class orc_itens extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'orcamento'=>array(self::BELONGS_TO, 'orcamentos', 'orcamentosId'),
 		);
 	}
 
@@ -56,8 +57,8 @@ class orc_itens extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'itensId' => 'Itens',
-			'orcamentosId' => 'Orcamentos',
+			'itensId' => 'Código',
+			'orcamentosId' => 'Orcamento',
 			'materiaisId' => 'Materiais',
 			'quantidade' => 'Quantidade',
 			'valorUnitario' => 'Valor Unitario',

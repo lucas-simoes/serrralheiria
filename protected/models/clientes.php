@@ -31,9 +31,9 @@ class clientes extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nome', 'required'),
-			array('telefone', 'numerical', 'integerOnly'=>true),
 			array('nome, endereco', 'length', 'max'=>80),
 			array('cidade', 'length', 'max'=>30),
+                        array('telefone', 'length', 'max'=>20),
 			array('estado', 'length', 'max'=>2),
 			array('email', 'length', 'max'=>40),
 			// The following rule is used by search().

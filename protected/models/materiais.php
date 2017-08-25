@@ -54,7 +54,7 @@ class materiais extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'materiaisId' => 'Materiais',
+			'materiaisId' => 'Código',
 			'nome' => 'Nome',
 			'unidade' => 'Unidade',
 			'valor' => 'Valor',

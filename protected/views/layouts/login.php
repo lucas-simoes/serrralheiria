@@ -38,8 +38,8 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-gift" aria-hidden="true"></i> Assistec Sorteios</h1>
-                  <p>Assistec Sorteios - Powered by <a href="http://solucoesquefacilitam.com.br/">Creative Solutions</p>
+                  <h1><i class="fa fa-gift" aria-hidden="true"></i> Serralheria Almeida</h1>
+                  <p>Serralheria Almeida - Powered by <a href="http://solucoesquefacilitam.com.br/">Creative Solutions</p>
                 </div>
               </div>
           </section>

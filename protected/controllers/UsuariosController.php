@@ -12,7 +12,6 @@ class UsuariosController extends Controller
 	 * @var CActiveRecord the currently loaded data model instance.
 	 */
 	private $_model;
-
 	/**
 	 * @return array action filters
 	 */
@@ -32,16 +31,8 @@ class UsuariosController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('index','view','create','update','admin','delete', 'changepass'),
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -72,9 +63,10 @@ class UsuariosController extends Controller
 
 		if(isset($_POST['usuarios']))
 		{
+                        $_POST['usuarios']['senha'] = md5($_POST['usuarios']['senha']);
 			$model->attributes=$_POST['usuarios'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->usuariosId));
+				$this->redirect(array('update','id'=>$model->usuariosId));
 		}
 
 		$this->render('create',array(
@@ -97,10 +89,31 @@ class UsuariosController extends Controller
 		{
 			$model->attributes=$_POST['usuarios'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->usuariosId));
+				$this->redirect(array('update','id'=>$model->usuariosId));
 		}
 
 		$this->render('update',array(
+			'model'=>$model,
+		));
+	}
+        
+        public function actionChangePass()
+	{
+		$model=$this->loadModel();
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['usuarios']))
+		{
+			//$model->attributes= md5($_POST['usuarios']['senha']);
+                        
+                        if ($model->saveAttributes(array('senha'=>md5($_POST['usuarios']['senha'])))) {
+                            $this->redirect(array('update','id'=>$model->usuariosId));
+                        } 
+		}
+
+		$this->render('changepass',array(
 			'model'=>$model,
 		));
 	}
@@ -111,14 +124,14 @@ class UsuariosController extends Controller
 	 */
 	public function actionDelete()
 	{
-		if(Yii::app()->request->isPostRequest)
+		if(!Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
 			$this->loadModel()->delete();
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
-				$this->redirect(array('index'));
+				$this->redirect(array('admin'));
 		}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
