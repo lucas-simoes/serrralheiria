@@ -11,31 +11,29 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="form-group row">
-		<?php echo $form->labelEx($model,'nome', array('class'=>'control-label col-md-2 col-sm-2 col-xs-12')); ?>
-            <div class="col-md-10 col-sm-10 col-xs-12">
-		<?php echo $form->textField($model,'nome',array('size'=>60,'maxlength'=>40)); ?>
+            <div class="col-md-6">
+		<?php echo $form->labelEx($model,'nome'); ?>
+		<?php echo $form->textField($model,'nome',array('size'=>60,'maxlength'=>40, 'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'nome'); ?>
             </div>
-	</div>
-
-	<div class="form-group row">
-		<?php echo $form->labelEx($model,'unidade', array('class'=>'control-label col-md-2 col-sm-2 col-xs-12')); ?>
-            <div class="col-md-10 col-sm-10 col-xs-12">
-		<?php echo $form->dropdownList($model,'unidade', $this->_unidades, array('empty'=>'')); ?>
+	
+            <div class="col-md-3">
+		<?php echo $form->labelEx($model,'unidade'); ?>
+		<?php echo $form->dropdownList($model,'unidade', $this->_unidades, array('empty'=>'', 'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'unidade'); ?>
             </div>
-	</div>
-
-	<div class="form-group row">
-		<?php echo $form->labelEx($model,'valor', array('class'=>'control-label col-md-2 col-sm-2 col-xs-12')); ?>
-            <div class="col-md-10 col-sm-10 col-xs-12">
-		<?php echo $form->textField($model,'valor',array('size'=>60,'maxlength'=>20, 'class'=>'money')); ?>
+	
+            <div class="col-md-3">
+		<?php echo $form->labelEx($model,'valor'); ?>
+		<?php echo $form->textField($model,'valor',array('size'=>60,'maxlength'=>20, 'class'=>'money form-control')); ?>
 		<?php echo $form->error($model,'valor'); ?>
             </div>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Salvar', array('class'=>'btn btn-default')); ?>
+            <div class="col-md-12">
+		<?php echo CHtml::submitButton('Salvar', array('class'=>'btn btn-lg btn-primary')); ?>
+            </div>
 	</div>
 
 <?php $this->endWidget(); ?>

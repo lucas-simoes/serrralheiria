@@ -48,6 +48,7 @@ class orc_itens extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
                     'orcamento'=>array(self::BELONGS_TO, 'orcamentos', 'orcamentosId'),
+                    'materiais'=>array(self::BELONGS_TO, 'materiais', 'materiaisId')
 		);
 	}
 
@@ -63,6 +64,7 @@ class orc_itens extends CActiveRecord
 			'quantidade' => 'Quantidade',
 			'valorUnitario' => 'Valor Unitario',
 			'valorTotal' => 'Valor Total',
+                        'materiais.nome' =>'Nome'
 		);
 	}
 

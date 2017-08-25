@@ -20,21 +20,21 @@ $this->pageTitle=Yii::app()->name;
 <!-- /.row -->
 
 <div class="row">
-    <!-- Vendas -->
+    <!-- Clientes Cadastrados! -->
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-money fa-5x"></i>
+                        <i class="fa fa-university fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge"></div>
-                        <div>Vendas Totais</div>
+                        <div>Clientes Cadastrados!</div>
                     </div>
                 </div>
             </div>
-            <a href="<?php echo Yii::app()->createUrl('usuarios/admin'); ?>">
+            <a href="">
                 <div class="panel-footer">
                     <span class="pull-left">Detalhes</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -42,23 +42,47 @@ $this->pageTitle=Yii::app()->name;
                 </div>
             </a>
         </div>
-    </div>   
-        
-    <!-- Sorteios -->
+    </div>
+    
+    <!-- Clientes na Versão Beta -->
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-code-fork fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+            <a href="">
+                <div class="panel-footer">
+                    <span class="pull-left">Detalhes</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Clientes na Versão Atual -->
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-green">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-star fa-5x"></i>
+                        <i class="fa fa-file-archive-o fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge"></div>
-                        <div>Sorteios Totais</div>
+                        <div></div>
                     </div>
                 </div>
             </div>
-            <a href="<?php echo Yii::app()->createUrl('clientes/admin'); ?>">
+            <a href="">
                 <div class="panel-footer">
                     <span class="pull-left">Detalhes</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -68,4 +92,3 @@ $this->pageTitle=Yii::app()->name;
         </div>
     </div>
 </div>
-

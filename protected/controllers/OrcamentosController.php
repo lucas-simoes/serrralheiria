@@ -32,24 +32,57 @@ class OrcamentosController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('index','view','create','update','admin','delete','additem'),
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
 		);
 	}
+        
+        public function actionAddItem() {
+            if ((isset($_POST['materiaisId'])) && ($_POST['materiaisId'] != '')) {
+                
+                try {
 
-	/**
+                    $model = new orc_itens();
+                    
+                    $materiais = materiais::model()->findByPk($_POST['materiaisId']);
+                    
+                    $model->setAttribute('materiaisId', $materiais->materiaisId);
+                    $model->setAttribute('quantidade', $_POST['quantidade']);
+                    $model->setAttribute('valorUnitario', $materiais->valor);
+                    $model->setAttribute('valorTotal', $materiais->valor * $_POST['quantidade']);
+
+                    array_push($_SESSION['itens'], $model);
+                    $_SESSION['provider'] = new CArrayDataProvider( [
+                                                    'allModels' => $_SESSION['itens'],
+                                                    'pagination' => [
+                                                        'pageSize' => 10,
+                                                    ],
+                                                    'sort' => [
+                                                        'attributes' => ['materiaisId', 'nome'],
+                                                    ],
+                                                ]);
+
+                    $resp['code'] = 200;
+                    $resp['msg'] = 'Operação Realizada com sucesso!';
+
+                    echo json_encode($resp);
+                } catch (Exception $exc) {
+                    echo $exc->getTraceAsString();
+                }
+                    
+            } else {
+                $resp['code'] = 500;
+                $resp['msg'] = 'Nenhum Item Selecionado!';
+                
+                echo json_encode($resp);
+            }
+        }
+
+        /**
 	 * Displays a particular model.
 	 */
 	public function actionView()
@@ -75,7 +108,10 @@ class OrcamentosController extends Controller
 			$model->attributes=$_POST['orcamentos'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->orcamentosId));
-		}
+		} else {
+                    $_SESSION['provider'] = new CArrayDataProvider(array());
+                    $_SESSION['itens'] = array();
+                }
 
 		$this->render('create',array(
 			'model'=>$model,

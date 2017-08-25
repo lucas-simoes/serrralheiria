@@ -1,300 +1,414 @@
+<?php /* @var $this Controller */ ?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!-- Meta, title, CSS, favicons, etc. -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+<head>
 
-        <!-- Bootstrap -->
-        <link href="<?php echo Yii::app()->request->baseUrl; ?>/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Font Awesome -->
-        <link href="<?php echo Yii::app()->request->baseUrl; ?>/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <!-- NProgress -->
-        <link href="<?php echo Yii::app()->request->baseUrl; ?>/vendors/nprogress/nprogress.css" rel="stylesheet">
-        <!-- iCheck -->
-        <link href="<?php echo Yii::app()->request->baseUrl; ?>/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <!-- bootstrap-progressbar -->
-        <link href="<?php echo Yii::app()->request->baseUrl; ?>/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-        <!-- JQVMap -->
-        <link href="<?php echo Yii::app()->request->baseUrl; ?>/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-        <!-- bootstrap-daterangepicker -->
-        <link href="<?php echo Yii::app()->request->baseUrl; ?>/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
-        <!-- Custom Theme Style -->
-        <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/custom.min.css" rel="stylesheet">
-        <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/creative.css" rel="stylesheet">
-    </head>
+    <!-- Bootstrap Core CSS -->
+    <link href="<?php echo Yii::app()->request->baseUrl; ?>/assets/css/bootstrap.min.css" rel="stylesheet">
 
-    <body class="nav-md">
-        <div class="container body">
-            <div class="main_container">
-                <div class="col-md-3 left_col">
-                    <div class="left_col scroll-view">
-                        <div class="navbar nav_title" style="border: 0;">
-                            <a href="<?php echo Yii::app()->baseUrl; ?>" class="site_title"><i class="fa fa-building" aria-hidden="true"></i> <span>Serralheria Almeida</span></a>
-                        </div>
+    <!-- Custom CSS -->
+    <link href="<?php echo Yii::app()->request->baseUrl; ?>/assets/css/sb-admin.css" rel="stylesheet">
 
-                        <div class="clearfix"></div>
+    <!-- Morris Charts CSS -->
+    <link href="<?php echo Yii::app()->request->baseUrl; ?>/assets/css/plugins/morris.css" rel="stylesheet">
 
-                        <!-- menu profile quick info -->
-                        <div class="profile clearfix">
-                            <div class="profile_pic">
-                                <img src="<?php echo Yii::app()->user->avatar; ?>" alt="..." class="img-circle profile_img">
-                            </div>
-                            <div class="profile_info">
-                                <span>Bem Vindo,</span>
-                                <h2><?php echo !Yii::app()->user->isGuest?Yii::app()->user->Nome:'Visitante'; ?></h2>
-                            </div>
-                        </div>
-                        <!-- /menu profile quick info -->
+    <!-- Custom Fonts -->
+    <link href="<?php echo Yii::app()->request->baseUrl; ?>/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-1.10.2.js"></script>
 
-                        <br />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .green {
+            color: green;
+        }
 
-                        <!-- sidebar menu -->
-                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                            <div class="menu_section">
-                                <h3>Menu</h3>
-                                <?php $this->widget('zii.widgets.CMenu',array(
-                                    'items'=>array(
-                                            array('label'=>'<i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard', 
-                                                  'url'=>array('/site/index')),
-                                        
-                                            array('label'=>'<i class="fa fa-users" aria-hidden="true"></i> Clientes<span class="fa fa-chevron-down">',
-                                                  'url'=>'javascript:void(0);',
-                                                  'items' =>array(
-                                                    array('label'=>'Novo Cliente', 
-                                                          'url'=>array('clientes/create')),
-                                                    array('label'=>'Lista de Clientes', 
-                                                          'url'=>array('clientes/admin')),
-                                                ),  
-                                            ), 
-                                        
-                                            array('label'=>'<i class="fa fa-tags" aria-hidden="true"></i> Materiais<span class="fa fa-chevron-down">',
-                                                  'url'=>'javascript:void(0);',
-                                                  'items' =>array(
-                                                    array('label'=>'Novo Material', 
-                                                          'url'=>array('materiais/create')),
-                                                    array('label'=>'Lista de Materiais', 
-                                                          'url'=>array('materiais/admin')),
-                                                ),  
-                                            ), 
-                                        
-                                            array('label'=>'<i class="fa fa-user"></i> Usuários<span class="fa fa-chevron-down">', 
-                                                'url'=>'javascript:void(0);', 
-                                                'items' =>array(
-                                                    array('label'=>'Novo Usuário', 
-                                                          'url'=>array('usuarios/create')),
-                                                    array('label'=>'Lista de Usuários', 
-                                                          'url'=>array('usuarios/admin')),
-                                                ),
-                                            ),                                     
-                                        
-                                            array('label'=>'<i class="fa fa-sign-in" aria-hidden="true"></i> Login', 
-                                                  'url'=>array('/site/login'), 
-                                                  'visible'=>Yii::app()->user->isGuest),
-                                            array('label'=>'<i class="fa fa-sign-out" aria-hidden="true"></i> Logout', 
-                                                  'url'=>array('/site/logout'), 
-                                                  'visible'=>!Yii::app()->user->isGuest)
-                                    ),
-                                    'htmlOptions'=>array('class'=>'nav side-menu'),
-                                    'submenuHtmlOptions' => array(
-                                        'class' => 'nav child_menu',
-                                    ),
-                                    'encodeLabel' => false,
-                            )); ?>
-                            </div>
+        .red {
+            color: red;
+        }
 
-                        </div>
-                        <!-- /sidebar menu -->
+        .yellow {
+            color: orange;
+        }
 
-                        <!-- /menu footer buttons -->
-                        <div class="sidebar-footer hidden-small">
-                            <!--<a data-toggle="tooltip" data-placement="top" title="Settings">
-                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                            </a>
-                            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                            </a>-->
-                            <a data-toggle="tooltip" data-placement="top" title="Logout" href="<?php echo Yii::app()->createUrl('site/logout'); ?>">
-                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                            </a>
-                        </div>
-                        <!-- /menu footer buttons -->
-                    </div>
-                </div>
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            position: fixed;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+          }
+          
+          .loading {
+              position: fixed;
+                z-index: 999999;
+                height: 2em;
+                width: 2em;
+                overflow: show;
+                margin: auto;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+          }
 
-                <!-- top navigation -->
-                <div class="top_nav">
-                    <div class="nav_menu">
-                        <nav>
-                            <div class="nav toggle">
-                                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                            </div>
+          .loading:before {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255,255,255,0.5);
+        }
 
-                            <ul class="nav navbar-nav navbar-right">
-                                <li class="">
-                                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        <img src="<?php echo Yii::app()->user->avatar; ?>" alt=""><?php echo !Yii::app()->user->isGuest?Yii::app()->user->Nome:'Visitante'; ?>
-                                        <span class=" fa fa-angle-down"></span>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                        <li><a href="<?php echo Yii::app()->createUrl('usuarios/ChangePass', array('id'=>Yii::app()->user->UserID)); ?>"><i class="fa fa-key pull-right"></i> Alterar Senha</a></li>
-                                        <li><a href="<?php echo Yii::app()->createUrl('site/logout'); ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-                                    </ul>
-                                </li>
+        /* :not(:required) hides these rules from IE9 and below */
+        .loading:not(:required) {
+            /* hide "loading..." text */
+            font: 0/0 a;
+            color: transparent;
+            text-shadow: none;
+            background-color: transparent;
+            border: 0;
+        }
+          
+          @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+          }
 
-                                <li role="presentation" class="dropdown">
-                                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-envelope-o"></i>
-                                        <span class="badge bg-green">0</span>
-                                    </a>
-                                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                                        <!--<li>
-                                            <a>
-                                                <span class="image"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/img.jpg" alt="Profile Image" /></span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a>
-                                                <span class="image"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/img.jpg" alt="Profile Image" /></span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a>
-                                                <span class="image"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/img.jpg" alt="Profile Image" /></span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a>
-                                                <span class="image"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/img.jpg" alt="Profile Image" /></span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>-->
-                                        <li>
-                                            <div class="text-center">
-                                                <a>
-                                                    <strong>Nenhuma Notificação</strong>
-                                                    <i class="fa fa-angle-right"></i>
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <!-- /top navigation -->
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+    </style>
+</head>
 
-                <!-- page content -->
-                <div class="right_col" role="main" id="principal">
-
-                    <?php echo $content; ?>
-
-                </div>
-                <!-- /page content -->
-
-                <!-- footer content -->
-                <footer>
-                    <div class="pull-right">
-                        Serralheria Almeida - Powered by <a href="http://solucoesquefacilitam.com.br/">Creative Solutions</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </footer>
-                <!-- /footer content -->
-            </div>
-        </div>
-
-        <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/franquia.js"></script>	
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.maskedinput.min.js"></script>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/jquery/dist/jquery.min.js"></script>        
-        <!-- Bootstrap -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- FastClick -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/fastclick/lib/fastclick.js"></script>
-        <!-- NProgress -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/nprogress/nprogress.js"></script>
-        <!-- Chart.js -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/Chart.js/dist/Chart.min.js"></script>
-        <!-- gauge.js -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/gauge.js/dist/gauge.min.js"></script>
-        <!-- iCheck -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/iCheck/icheck.min.js"></script>
-        <!-- Skycons -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/skycons/skycons.js"></script>
-        <!-- Flot -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/Flot/jquery.flot.js"></script>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/Flot/jquery.flot.pie.js"></script>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/Flot/jquery.flot.time.js"></script>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/Flot/jquery.flot.stack.js"></script>
-        <!-- Flot plugins -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/flot.curvedlines/curvedLines.js"></script>
-        <!-- DateJS -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/DateJS/build/date.js"></script>
-        <!-- JQVMap -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/jqvmap/dist/jquery.vmap.js"></script>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-        <!-- bootstrap-daterangepicker -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/moment/min/moment.min.js"></script>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-        <!-- Custom Theme Scripts -->
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/custom.min.js"></script>
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
-        <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.css"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
-        <script type="text/javascript">
-            $(function() {
-                $(".chzn-select").chosen();
-            });
-            $('.money').mask("####0.00", {reverse: true});
-        </script>
-        <script type="text/javascript">
-            var altura = ($(document).height() - 200) + 'px';
-            document.getElementById("principal").style.minHeight = altura;
-        </script>
+<body>
+    <div class="loading" id="loading" style="display: none">
+        <div class="loader"></div>
+     </div>
+    <div id="wrapper">
         
-    </body>
-</html>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="<?php echo Yii::app()->request->baseUrl; ?>"><i class="fa fa-cogs" style="color: #f3f3f3; font-size: 30px" aria-hidden="true"></i> <?php echo CHtml::encode(Yii::app()->name); ?></a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                <!--<li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                    <ul class="dropdown-menu message-dropdown">
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-footer">
+                            <a href="#">Read All New Messages</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                    <ul class="dropdown-menu alert-dropdown">
+                        <li>
+                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">View All</a>
+                        </li>
+                    </ul>
+                </li>-->
+                <?php if(!Yii::app()->user->isGuest) : ?>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo Yii::app()->user->Nome; ?> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="<?php echo Yii::app()->createUrl('usuarios/view', array('id'=>  Yii::app()->user->userId)); ?>"><i class="fa fa-fw fa-user"></i> Perfil</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo Yii::app()->createUrl('usuarios/changepass', array('id'=>  Yii::app()->user->userId)); ?>"><i class="fa fa-fw fa-gear"></i> Trocar Senha</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="<?php echo Yii::app()->createUrl('/site/logout'); ?>"><i class="fa fa-fw fa-power-off"></i> Sair</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+		<?php $this->widget('zii.widgets.CMenu',array(
+			'items'=>array(
+                                //Dashboard
+				array('label'=>'<i class="fa fa-fw fa-dashboard"></i> Dashboard', 'url'=>array('/site/index')),
+                                //Empresas
+                                array('label'=>'<i class="fa fa-fw fa-university"></i> Empresas', 
+                                                  'url'=>'javascript:void(0);', 
+                                                  'items' =>array(
+                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todas Empresas', 
+                                                              'url'=>array('/clientes/admin')),
+                                                  ),
+                                                  'linkOptions'=> array(
+                                                        'data-target' => '#empresa',
+                                                        'data-toggle' => 'collapse',
+                                                        ),
+                                                  'submenuOptions'=>array('id'=>'empresa', 
+                                                                          'class'=>'collapse')),   
+                                //Usuários                                          
+                                 array('label'=>'<i class="fa fa-fw fa-users"></i> Usuários', 
+                                                  'url'=>'javascript:void(0);', 
+                                                  'items' =>array(
+                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos Usuários', 
+                                                              'url'=>array('/usuarios/admin')),
+                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo Usuário', 
+                                                              'url'=>array('/usuarios/create')),
+                                                  ),
+                                                  'linkOptions'=> array(
+                                                        'data-target' => '#usuario',
+                                                        'data-toggle' => 'collapse',
+                                                        ),
+                                                  'submenuOptions'=>array('id'=>'usuario', 
+                                                                          'class'=>'collapse')),  
+                                //Versões                                          
+                                array('label'=>'<i class="fa fa-fw fa-file-archive-o"></i> Versões', 
+                                                  'url'=>'javascript:void(0);', 
+                                                  'items' =>array(
+                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todas Versões', 
+                                                              'url'=>array('/versoes/admin')),
+                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Nova Versão', 
+                                                              'url'=>array('/versoes/create')),
+                                                  ),
+                                                  'linkOptions'=> array(
+                                                        'data-target' => '#versao',
+                                                        'data-toggle' => 'collapse',
+                                                        ),
+                                                  'submenuOptions'=>array('id'=>'versao', 
+                                                                          'class'=>'collapse')), 
+                                //Arquivos
+                                array('label'=>'<i class="fa fa-fw fa-file"></i> Arquivos', 
+                                                  'url'=>'javascript:void(0);', 
+                                                  'items' =>array(
+                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos Arquivos', 
+                                                              'url'=>array('/arquivos/admin')),
+                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo Arquivo', 
+                                                              'url'=>array('/arquivos/create')),
+                                                  ),
+                                                  'linkOptions'=> array(
+                                                        'data-target' => '#arquivos',
+                                                        'data-toggle' => 'collapse',
+                                                        ),
+                                                  'submenuOptions'=>array('id'=>'arquivos', 
+                                                                          'class'=>'collapse')),
+                                //Scripts
+                                array('label'=>'<i class="fa fa-fw fa-database"></i> Scripts', 
+                                                  'url'=>'javascript:void(0);', 
+                                                  'items' =>array(
+                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos Scripts', 
+                                                              'url'=>array('/scripts/admin')),
+                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo Scripts', 
+                                                              'url'=>array('/scripts/create')),
+                                                  ),
+                                                  'linkOptions'=> array(
+                                                        'data-target' => '#scripts',
+                                                        'data-toggle' => 'collapse',
+                                                        ),
+                                                  'submenuOptions'=>array('id'=>'scripts', 
+                                                                          'class'=>'collapse')),
+                                //Relatórios
+                                array('label'=>'<i class="fa fa-fw fa-file-text"></i> Relatórios', 
+                                                  'url'=>'javascript:void(0);', 
+                                                  'items' =>array(
+                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos Relatórios', 
+                                                              'url'=>array('/relatorios/admin')),
+                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo Relatório', 
+                                                              'url'=>array('/relatorios/create')),
+                                                  ),
+                                                  'linkOptions'=> array(
+                                                        'data-target' => '#relatorio',
+                                                        'data-toggle' => 'collapse',
+                                                        ),
+                                                  'submenuOptions'=>array('id'=>'relatorio', 
+                                                                          'class'=>'collapse')),
+                                //Reports
+                                array('label'=>'<i class="fa fa-fw fa-file-text"></i> Reports', 
+                                                  'url'=>'javascript:void(0);', 
+                                                  'items' =>array(
+                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos Reports', 
+                                                              'url'=>array('/reports/admin')),
+                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo Report', 
+                                                              'url'=>array('/reports/create')),
+                                                  ),
+                                                  'linkOptions'=> array(
+                                                        'data-target' => '#report',
+                                                        'data-toggle' => 'collapse',
+                                                        ),
+                                                  'submenuOptions'=>array('id'=>'report', 
+                                                                          'class'=>'collapse')),
+                                //Login/Logout
+				array('label'=>'<i class="fa fa-user"></i> Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+				array('label'=>'<i class="fa fa-sign-out"></i> Logout ('.Yii::app()->user->Nome.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+			),
+                        'htmlOptions'=>array('class'=>'nav navbar-nav side-nav'),
+                        'encodeLabel' => false,
+		)); ?>
+            </div>
+            <!-- /.navbar-collapse -->
+            <?php endif; ?>
+        </nav>
+        
+        <div id="page-wrapper">
 
+            <div class="container-fluid">
+            
+            <?php echo $content; ?>
+        
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/assets/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/assets/js/bootstrap.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/assets/js/plugins/morris/raphael.min.js"></script>
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/assets/js/plugins/morris/morris.min.js"></script>
+    
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.mask.min.js"></script>
+    <script type="text/javascript">
+        $('.money').mask("####0.00", {reverse: true});
+    </script>
+    
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/assets/js/jquery.maskedinput.min.js"></script>
+    
+    <script type="text/javascript">
+        jQuery( function($){
+
+             $(".data").mask("99/99/9999");
+             $(".tel").mask("(99) 9999-9999");
+             $(".cel").mask("(99) 99999-9999");
+             $(".cpf").mask("999.999.999-99");
+             $(".cnpj").mask("99.999.999/9999-99");
+             $(".cep").mask("99999-999");
+
+        });
+        
+        jQuery.browser = {};
+        (function () {
+            jQuery.browser.msie = false;
+            jQuery.browser.version = 0;
+            if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+                jQuery.browser.msie = true;
+                jQuery.browser.version = RegExp.$1;
+            }
+        })();
+    </script>
+    
+    <script type="text/javascript">
+        var altura = ($(document).height() - 60) + 'px';
+        document.getElementById("page-wrapper").style.minHeight = altura;
+    </script>
+    
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-migrate-1.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ba-bbq/1.2.1/jquery.ba-bbq.min.js"></script>
+
+</body>
+
+</html>

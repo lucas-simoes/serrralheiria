@@ -18,7 +18,7 @@ class MateriaisController extends Controller
         public function __construct($id, $module = null) {
             
             $list = array('UN'=>'Unidade', 'LT'=>'Litro', 'CX'=>'Caixa', 'MT'=>'Metro', 'KG'=>'Quilo');    
-            array_push($this->_unidades, $list);
+            $this->_unidades = $list;
             parent::__construct($id, $module);
         }
 
