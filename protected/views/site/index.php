@@ -29,12 +29,12 @@ $this->pageTitle=Yii::app()->name;
                         <i class="fa fa-university fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"></div>
-                        <div>Clientes Cadastrados!</div>
+                        <div class="huge"><?php echo $qtdOrc; ?></div>
+                        <div>Quant. de Orçamentos!</div>
                     </div>
                 </div>
             </div>
-            <a href="">
+            <a href="<?php echo Yii::app()->createUrl('orcamentos/admin'); ?>">
                 <div class="panel-footer">
                     <span class="pull-left">Detalhes</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -50,39 +50,15 @@ $this->pageTitle=Yii::app()->name;
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-code-fork fa-5x"></i>
+                        <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"></div>
-                        <div></div>
+                        <div class="huge"><?php echo $qtdClientes; ?></div>
+                        <div>Clientes Cadastrados</div>
                     </div>
                 </div>
             </div>
-            <a href="">
-                <div class="panel-footer">
-                    <span class="pull-left">Detalhes</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-    
-    <!-- Clientes na Versão Atual -->
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-green">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-file-archive-o fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge"></div>
-                        <div></div>
-                    </div>
-                </div>
-            </div>
-            <a href="">
+            <a href="<?php echo Yii::app()->createUrl('clientes/admin'); ?>">
                 <div class="panel-footer">
                     <span class="pull-left">Detalhes</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

@@ -231,21 +231,53 @@
 			'items'=>array(
                                 //Dashboard
 				array('label'=>'<i class="fa fa-fw fa-dashboard"></i> Dashboard', 'url'=>array('/site/index')),
-                                //Empresas
-                                array('label'=>'<i class="fa fa-fw fa-university"></i> Empresas', 
+                                //Orçementos
+                                array('label'=>'<i class="fa fa-fw fa-university"></i> Orçamentos', 
                                                   'url'=>'javascript:void(0);', 
                                                   'items' =>array(
-                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todas Empresas', 
-                                                              'url'=>array('/clientes/admin')),
+                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos os Orçamentos', 
+                                                              'url'=>array('/orcamentos/admin')),
+                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo Orçamento', 
+                                                              'url'=>array('/orcamentos/create')),      
                                                   ),
                                                   'linkOptions'=> array(
-                                                        'data-target' => '#empresa',
+                                                        'data-target' => '#orc',
                                                         'data-toggle' => 'collapse',
                                                         ),
-                                                  'submenuOptions'=>array('id'=>'empresa', 
+                                                  'submenuOptions'=>array('id'=>'orc', 
                                                                           'class'=>'collapse')),   
-                                //Usuários                                          
-                                 array('label'=>'<i class="fa fa-fw fa-users"></i> Usuários', 
+                                //Materiais                                          
+                                 array('label'=>'<i class="fa fa-fw fa-cogs"></i> Materiais', 
+                                                  'url'=>'javascript:void(0);', 
+                                                  'items' =>array(
+                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos Materiais', 
+                                                              'url'=>array('/materiais/admin')),
+                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo Material', 
+                                                              'url'=>array('/materiais/create')),
+                                                  ),
+                                                  'linkOptions'=> array(
+                                                        'data-target' => '#materiais',
+                                                        'data-toggle' => 'collapse',
+                                                        ),
+                                                  'submenuOptions'=>array('id'=>'materiais', 
+                                                                          'class'=>'collapse')),  
+                                //Clientes                                          
+                                 array('label'=>'<i class="fa fa-fw fa-cogs"></i> Clientes', 
+                                                  'url'=>'javascript:void(0);', 
+                                                  'items' =>array(
+                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos Clientes', 
+                                                              'url'=>array('/clientes/admin')),
+                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo Cliente', 
+                                                              'url'=>array('/clientes/create')),
+                                                  ),
+                                                  'linkOptions'=> array(
+                                                        'data-target' => '#clientes',
+                                                        'data-toggle' => 'collapse',
+                                                        ),
+                                                  'submenuOptions'=>array('id'=>'clientes', 
+                                                                          'class'=>'collapse')),  
+                                //usuarios                                          
+                                array('label'=>'<i class="fa fa-fw fa-users"></i> Usuários', 
                                                   'url'=>'javascript:void(0);', 
                                                   'items' =>array(
                                                         array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos Usuários', 
@@ -254,86 +286,11 @@
                                                               'url'=>array('/usuarios/create')),
                                                   ),
                                                   'linkOptions'=> array(
-                                                        'data-target' => '#usuario',
+                                                        'data-target' => '#usuarios',
                                                         'data-toggle' => 'collapse',
                                                         ),
-                                                  'submenuOptions'=>array('id'=>'usuario', 
-                                                                          'class'=>'collapse')),  
-                                //Versões                                          
-                                array('label'=>'<i class="fa fa-fw fa-file-archive-o"></i> Versões', 
-                                                  'url'=>'javascript:void(0);', 
-                                                  'items' =>array(
-                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todas Versões', 
-                                                              'url'=>array('/versoes/admin')),
-                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Nova Versão', 
-                                                              'url'=>array('/versoes/create')),
-                                                  ),
-                                                  'linkOptions'=> array(
-                                                        'data-target' => '#versao',
-                                                        'data-toggle' => 'collapse',
-                                                        ),
-                                                  'submenuOptions'=>array('id'=>'versao', 
+                                                  'submenuOptions'=>array('id'=>'usuarios', 
                                                                           'class'=>'collapse')), 
-                                //Arquivos
-                                array('label'=>'<i class="fa fa-fw fa-file"></i> Arquivos', 
-                                                  'url'=>'javascript:void(0);', 
-                                                  'items' =>array(
-                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos Arquivos', 
-                                                              'url'=>array('/arquivos/admin')),
-                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo Arquivo', 
-                                                              'url'=>array('/arquivos/create')),
-                                                  ),
-                                                  'linkOptions'=> array(
-                                                        'data-target' => '#arquivos',
-                                                        'data-toggle' => 'collapse',
-                                                        ),
-                                                  'submenuOptions'=>array('id'=>'arquivos', 
-                                                                          'class'=>'collapse')),
-                                //Scripts
-                                array('label'=>'<i class="fa fa-fw fa-database"></i> Scripts', 
-                                                  'url'=>'javascript:void(0);', 
-                                                  'items' =>array(
-                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos Scripts', 
-                                                              'url'=>array('/scripts/admin')),
-                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo Scripts', 
-                                                              'url'=>array('/scripts/create')),
-                                                  ),
-                                                  'linkOptions'=> array(
-                                                        'data-target' => '#scripts',
-                                                        'data-toggle' => 'collapse',
-                                                        ),
-                                                  'submenuOptions'=>array('id'=>'scripts', 
-                                                                          'class'=>'collapse')),
-                                //Relatórios
-                                array('label'=>'<i class="fa fa-fw fa-file-text"></i> Relatórios', 
-                                                  'url'=>'javascript:void(0);', 
-                                                  'items' =>array(
-                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos Relatórios', 
-                                                              'url'=>array('/relatorios/admin')),
-                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo Relatório', 
-                                                              'url'=>array('/relatorios/create')),
-                                                  ),
-                                                  'linkOptions'=> array(
-                                                        'data-target' => '#relatorio',
-                                                        'data-toggle' => 'collapse',
-                                                        ),
-                                                  'submenuOptions'=>array('id'=>'relatorio', 
-                                                                          'class'=>'collapse')),
-                                //Reports
-                                array('label'=>'<i class="fa fa-fw fa-file-text"></i> Reports', 
-                                                  'url'=>'javascript:void(0);', 
-                                                  'items' =>array(
-                                                        array('label'=>'<i class="fa fa-list-ul" aria-hidden="true"></i> Todos Reports', 
-                                                              'url'=>array('/reports/admin')),
-                                                        array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo Report', 
-                                                              'url'=>array('/reports/create')),
-                                                  ),
-                                                  'linkOptions'=> array(
-                                                        'data-target' => '#report',
-                                                        'data-toggle' => 'collapse',
-                                                        ),
-                                                  'submenuOptions'=>array('id'=>'report', 
-                                                                          'class'=>'collapse')),
                                 //Login/Logout
 				array('label'=>'<i class="fa fa-user"></i> Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'<i class="fa fa-sign-out"></i> Logout ('.Yii::app()->user->Nome.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)

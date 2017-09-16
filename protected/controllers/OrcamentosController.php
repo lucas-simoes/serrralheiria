@@ -13,7 +13,7 @@ class OrcamentosController extends Controller
 	 */
 	private $_model;
 
-	/**
+        /**
 	 * @return array action filters
 	 */
 	public function filters()
@@ -45,25 +45,24 @@ class OrcamentosController extends Controller
             if ((isset($_POST['materiaisId'])) && ($_POST['materiaisId'] != '')) {
                 
                 try {
-
-                    $model = new orc_itens();
                     
                     $materiais = materiais::model()->findByPk($_POST['materiaisId']);
                     
-                    $model->setAttribute('materiaisId', $materiais->materiaisId);
-                    $model->setAttribute('quantidade', $_POST['quantidade']);
-                    $model->setAttribute('valorUnitario', $materiais->valor);
-                    $model->setAttribute('valorTotal', $materiais->valor * $_POST['quantidade']);
-
-                    array_push($_SESSION['itens'], $model);
-                    $_SESSION['provider'] = new CArrayDataProvider($_SESSION['itens']);
+                    $data = array();
                     
-                    $_SESSION['provider']->keyField = 'materiaisId';
+                    $data['materiaisId'] = $materiais->materiaisId;
+                    $data['nome'] = $materiais->nome;
+                    $data['quantidade'] = $_POST['quantidade'];
+                    $data['valorUnitario'] = $materiais->valor;
+                    $data['valorTotal'] = number_format($materiais->valor * $_POST['quantidade'], 2, '.', '');
  
                     $resp['code'] = 200;
                     $resp['msg'] = 'Operação Realizada com sucesso!';
+                    $resp['obj'] = $data;
 
-                    echo json_encode($resp);
+                    echo CJSON::encode($data);
+                    //$this->renderPartial('_grid', array('dp_itens'=>$dp_itens));
+                    
                 } catch (Exception $exc) {
                     echo $exc->getTraceAsString();
                 }
@@ -100,15 +99,49 @@ class OrcamentosController extends Controller
 		if(isset($_POST['orcamentos']))
 		{
 			$model->attributes=$_POST['orcamentos'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->orcamentosId));
+                        
+                        if ($model->clientesId != '') {
+                            $cliente = clientes::model()->findByPk($model->clientesId);
+
+                            $model->setAttribute('nomeCliente', $cliente->nome);
+                        } else {
+                            $model->setAttribute('nomeCliente', 'Consumidor Final');    
+                        }
+                        
+			if($model->save()) {
+                            foreach ($_POST['itens'] as $item) {
+                                $obj = CJSON::decode($item);
+                                
+                                $objItem = new orc_itens;
+                                $objItem->setAttributes(array(
+                                    'orcamentosId'=>$model->orcamentosId,
+                                    'materiaisId'=>$obj['materiaisId'],
+                                    'quantidade'=>$obj['quantidade'],
+                                    'valorUnitario'=>$obj['valorUnitario'],
+                                    'valorTotal'=>$obj['valorTotal']
+                                ));
+                                
+                                $objItem->save();
+                            }
+				$this->redirect(array('update','id'=>$model->orcamentosId));
+                        } else {
+                            $erro = $model->getErrors();
+
+                            $text = '';
+
+                            foreach ($erro as $er) {
+                                $text = $text . '. ' . $er[0];
+                            }
+
+                            throw new CDbException($text);
+                        }
 		} else {
-                    $_SESSION['provider'] = new CArrayDataProvider(array());
-                    $_SESSION['itens'] = array();
+                    $provider = new CArrayDataProvider(array());
                 }
 
 		$this->render('create',array(
 			'model'=>$model,
+                        'provider'=>$provider
 		));
 	}
 
@@ -126,12 +159,24 @@ class OrcamentosController extends Controller
 		if(isset($_POST['orcamentos']))
 		{
 			$model->attributes=$_POST['orcamentos'];
+                        
+                        $cliente = clientes::model()->findByPk($model->clientesId);
+                        
+                        $model->setAttribute('nomeCliente', $cliente->nome);
+                        
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->orcamentosId));
-		}
+		} else {
+                    $criteria = new CDbCriteria();
+                    $criteria->compare('orcamentosId',$model->orcamentosId);
+                    $provider = new CActiveDataProvider('orc_itens', array(
+			'criteria'=>$criteria,
+                    ));
+                }
 
 		$this->render('update',array(
 			'model'=>$model,
+                        'provider'=>$provider
 		));
 	}
 
