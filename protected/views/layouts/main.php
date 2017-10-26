@@ -25,6 +25,9 @@
     <link href="<?php echo Yii::app()->request->baseUrl; ?>/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-1.10.2.js"></script>
+    
+    
+    <link rel="stylesheet" href="<?php echo Yii::app()->baseUrl; ?>/bower_components/select2/dist/css/select2.min.css"> 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

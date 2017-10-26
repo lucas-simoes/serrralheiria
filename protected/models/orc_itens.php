@@ -60,11 +60,11 @@ class orc_itens extends CActiveRecord
 		return array(
 			'itensId' => 'Código',
 			'orcamentosId' => 'Orcamento',
-			'materiaisId' => 'Materiais',
+			'materiaisId' => 'Cód. Material',
 			'quantidade' => 'Quantidade',
 			'valorUnitario' => 'Valor Unitario',
 			'valorTotal' => 'Valor Total',
-                        'materiais.nome' =>'Nome'
+                        'materiais.nome' =>'Material'
 		);
 	}
 

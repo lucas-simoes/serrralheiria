@@ -5,19 +5,22 @@
         'id' => 'orcamentos-form',
         'enableAjaxValidation' => false,
     ));
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/bower_components/select2/dist/js/select2.full.min.js', CClientScript::POS_END);
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/orcamentos.js', CClientScript::POS_END);
+    //Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/dist/css/skins/_all-skins.min.css', CClientScript::POS_HEAD);
     ?>
 
     <?php echo $form->errorSummary($model); ?>
 
     <?php
-        echo CHtml::hiddenField('psedoMat', 0, array('id' => 'pMat'));
-        echo $form->hiddenField($model, 'valorMaterial');
+    echo CHtml::hiddenField('psedoMat', 0, array('id' => 'pMat'));
+    echo $form->hiddenField($model, 'valorMaterial');
     ?>
 
     <div class="form-group row">
         <div class="col-md-6">
             <?php echo $form->labelEx($model, 'clientesId'); ?>
-            <?php echo $form->dropdownList($model, 'clientesId', CHtml::listData(clientes::model()->findAll(), 'clientesId', 'nome'), array('class' => 'form-control', 'empty' => '')); ?>
+            <?php echo $form->dropdownList($model, 'clientesId', CHtml::listData(clientes::model()->findAll(), 'clientesId', 'nome'), array('class' => 'form-control select2', 'empty' => '', 'style' => 'width: 100%')); ?>
             <?php echo $form->error($model, 'clientesId'); ?>
         </div>
 
@@ -48,84 +51,109 @@
         </div>
     </div>
 
-    <hr>
-
-    <h3>Materiais</h3>
-
-    <div class="form-group row">
-        <div class="col-md-8 col-sm-4 col-xs-2">
-            <?php echo CHtml::dropDownList('materiaisId', '', CHtml::listData(materiais::model()->findAll(), 'materiaisId', 'nome'), array('class' => 'form-control', 'id' => 'material', 'empty' => '')); ?>
-        </div>
-
-        <div class="col-md-2 col-sm-4 col-xs-2">
-            <?php echo CHtml::textField('qtd', '', array('class' => 'money form-control', 'id' => 'qtd')); ?>
-        </div>
-
-        <div class="col-md-2 col-sm-4 col-xs-2">
-            <?php
-            echo CHtml::ajaxLink("Inserir no Orçamento", $this->createUrl('orcamentos/additem'), array(
-                "type" => "post",
-                "data" => 'js:{materiaisId : document.getElementById("material").value,"quantidade": document.getElementById("qtd").value}',
-                "success" => 'confirmation'), array(
-                'class' => 'btn btn-primary', 'onclick' => 'loading()', 'id' => 'btnGerar'
-                    )
-            );
-            ?> 
-        </div>
-    </div>
-
-    <?php
-
-    $this->widget('zii.widgets.grid.CGridView', array(
-        'id' => 'orcamentos-grid',
-        'dataProvider' => $provider,
-        'ajaxUpdate' => true,
-        'columns' => array(
-            array(
-                'name' => 'Código',
-                'value' => '$data->materiaisId'
-            ),
-            array(
-                'name' => 'Nome',
-                'value' => 'CHtml::encode($data->materiais->nome)'
-            ),
-            array(
-                'name' => 'Quantidade',
-                'value' => '$data->quantidade'
-            ),
-            array(
-                'name' => 'Valor Unitario',
-                'value' => '$data->valorUnitario'
-            ),
-            array(
-                'name' => 'Valor Total',
-                'value' => '$data->valorTotal'
-            ),
-        ),
-        'htmlOptions' => array('class' => 'table table-responsive', 'id'=>'table-orc'),
-        'itemsCssClass' => 'table table-hover',
-        'pagerCssClass' => 'text-center',
-        'pager' => array(
-            'htmlOptions' => array('class' => 'pagination'),
-            'header' => '',
-        ),
-    ));
-    ?>  
-
     <div class="row buttons">
         <div class="col-md-12">
-            <?php 
-                if ($model->isNewRecord) {
-                    echo CHtml::submitButton('Salvar', array('class' => 'btn btn-lg btn-primary')); 
-                }
-            ?>
+            <?php echo CHtml::submitButton('Salvar Cabeçalho', array('class' => 'btn btn-lg btn-primary')); ?>
         </div>
     </div>
 
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 
+    <hr>
+
+    <div id="separador" style="display: <?php echo $model->isNewRecord ? 'none' : 'block'; ?>">
+        <?php
+        $itens_form = $this->beginWidget('CActiveForm', array(
+            'id' => 'itens-form',
+            'enableAjaxValidation' => false,
+            'action' => Yii::app()->createUrl('orcamentos/addItem'),
+        ));
+        ?>
+
+        <?php echo $itens_form->errorSummary($model); ?>
+
+        <h3>Materiais</h3>
+
+        <div class="form-group row">
+            <div class="col-md-4 col-sm-2 col-xs-2">
+                <?php echo $itens_form->dropDownList($itens, 
+                                                     'materiaisId', 
+                                                     CHtml::listData(materiais::model()->findAll(), 'materiaisId', 'nome'), 
+                                                     array('class' => 'form-control select2', 
+                                                           'id' => 'material', 
+                                                           'empty' => '',
+                                                           'ajax'=>array('type'=>'POST',
+                                                                         'dataType'=>'json',
+                                                                         'url'=> Yii::app()->createUrl('orcamentos/dados'),
+                                                                         'success'=>'updateForm',
+
+                                                                   ))); ?>
+                <?php echo $itens_form->error($itens, 'materiaisId'); ?>
+            </div>
+
+            <div class="col-md-2 col-sm-2 col-xs-2">
+                <?php echo $itens_form->textField($itens, 'quantidade', array('class' => 'money form-control', 'id' => 'qtd')); ?>
+                <?php echo $itens_form->error($itens, 'quantidade'); ?>
+            </div>
+            
+            <div class="col-md-2 col-sm-2 col-xs-2">
+                <?php echo $itens_form->textField($itens, 'valorUnitario', array('class' => 'money form-control', 'id'=>'valorUn')); ?>
+                <?php echo $itens_form->error($itens, 'valorUnitario'); ?>
+            </div>
+            
+            <div class="col-md-2 col-sm-1 col-xs-2">
+                <?php echo $itens_form->textField($itens, 'valorTotal', array('class' => 'money form-control', 'id'=>'valorTot')); ?>
+                <?php echo $itens_form->error($itens, 'valorTotal'); ?>
+            </div>
+            
+            <?php echo $itens_form->hiddenField($itens, 'orcamentosId'); ?>
+
+            <div class="col-md-2 col-sm-2 col-xs-2">
+                <?php
+                echo CHtml::submitButton('Inserir Item', array('class' => 'btn btn-primary'));
+                ?> 
+            </div>
+        </div>
+
+        <?php $this->endWidget(); ?>
+
+        <?php
+        $this->widget('zii.widgets.grid.CGridView', array(
+            'id' => 'orcamentos-grid',
+            'dataProvider' => $itens->search(),
+            'columns' => array(
+		'materiaisId',
+                'materiais.nome',
+		'quantidade',
+		'valorUnitario',
+		'valorTotal',
+                array(
+			'class'=>'CButtonColumn',
+                        'template'=>'{deletar}',
+                        'deleteButtonLabel' => '<i class="fa fa-trash"></i>',
+                        'deleteButtonLabel'=> false,
+                        'buttons' => array (                            
+                            'deletar' => array(
+                                'label'=>'<i class="fa fa-trash"></i>',
+                                'url'=>'Yii::app()->createUrl("orcamentos/deleteItem", array("id"=>"$data->itensId"))',
+                                'options'=>array('title'=>'Excluir', 'class'=>'btn btn-default' ),
+                            ),
+                        ),
+		),
+            ),
+            'htmlOptions' => array('class' => 'table table-responsive', 'id' => 'table-orc'),
+            'itemsCssClass' => 'table table-hover',
+            'pagerCssClass' => 'text-center',
+            'pager' => array(
+                'htmlOptions' => array('class' => 'pagination'),
+                'header' => '',
+            ),
+        ));
+        ?> 
+
+    </div>
 </div><!-- form -->
-<script>
+<script type="text/javascript">
     function loading() {
         document.getElementById('loading').style.display = 'block';
     }
@@ -134,7 +162,7 @@
         valorMo = document.getElementById('mo');
         valorTot = document.getElementById('vTotal');
         pMat = document.getElementById('pMat');
-        
+
         if (valorTot.value === '') {
             valorTot.value = 0;
         }
@@ -142,46 +170,52 @@
         valorTot.value = parseFloat(valorTot.value) + parseFloat(pMat.value) + parseFloat(valorMo.value);
     })
 
-    function confirmation(data) {
+    /*function confirmation(data) {
         document.getElementById('loading').style.display = 'none';
 
         document.getElementById('material').value = '';
 
         document.getElementById('qtd').value = '';
-        
-        var $hiddenInput = $('<input/>',{type:'hidden',name:'itens[]',value:data});
-        
+
+        var $hiddenInput = $('<input/>', {type: 'hidden', name: 'itens[]', value: data});
+
         $hiddenInput.appendTo('#orcamentos-form');
-        
+
         data = JSON.parse(data);
 
-        var newRow = $("<tr>");		    
+        var newRow = $("<tr>");
         var cols = "";
-        cols += '<td>' + data.materiaisId + '</td>';		    
-        cols += '<td>' + data.nome + '</td>';		    
-        cols += '<td>' + data.quantidade + '</td>';		    
+        cols += '<td>' + data.materiaisId + '</td>';
+        cols += '<td>' + data.nome + '</td>';
+        cols += '<td>' + data.quantidade + '</td>';
         cols += '<td>' + data.valorUnitario + '</td>';
         cols += '<td>' + data.valorTotal + '</td>';
         newRow.append(cols);
         $('.table-hover').append(newRow);
-        
+
         valorTot = document.getElementById('vTotal');
-        
+
         if (valorTot.value === '') {
             valorTot.value = 0;
         }
-        
+
         valorTot.value = parseFloat(valorTot.value) + parseFloat(data.valorTotal);
-        
+
         var valorMaterial = document.getElementById('orcamentos_valorMaterial');
-        
+
         if (valorMaterial.value == '') {
             valorMaterial.value = 0;
         }
-        
+
         valorMaterial.value = parseFloat(valorMaterial.value) + parseFloat(data.valorTotal);
-        
+
         var tr = $('.empty').closest('tr');
         tr.remove();
+    }*/
+    
+    function updateForm(data) {        
+        document.getElementById('qtd').value = data.quantidade;
+        document.getElementById('valorUn').value = data.valorUnitario;
+        document.getElementById('valorTot').value = data.valorTotal;
     }
 </script>
