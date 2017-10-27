@@ -132,6 +132,7 @@
 
         <div class="form-group row">
             <div class="col-md-4 col-sm-2 col-xs-2">
+                <?php echo $itens_form->labelEx($itens, 'materiaisId'); ?>
                 <?php echo $itens_form->dropDownList($itens, 
                                                      'materiaisId', 
                                                      CHtml::listData(materiais::model()->findAll(), 'materiaisId', 'nome'), 
@@ -148,23 +149,26 @@
             </div>
 
             <div class="col-md-2 col-sm-2 col-xs-2">
+                <?php echo $itens_form->labelEx($itens, 'quantidade'); ?>
                 <?php echo $itens_form->textField($itens, 'quantidade', array('class' => 'money form-control', 'id' => 'qtd')); ?>
                 <?php echo $itens_form->error($itens, 'quantidade'); ?>
             </div>
             
             <div class="col-md-2 col-sm-2 col-xs-2">
+                <?php echo $itens_form->labelEx($itens, 'valorUnitario'); ?>
                 <?php echo $itens_form->textField($itens, 'valorUnitario', array('class' => 'money form-control', 'id'=>'valorUn')); ?>
                 <?php echo $itens_form->error($itens, 'valorUnitario'); ?>
             </div>
             
             <div class="col-md-2 col-sm-1 col-xs-2">
+                <?php echo $itens_form->labelEx($itens, 'valorTotal'); ?>
                 <?php echo $itens_form->textField($itens, 'valorTotal', array('class' => 'money form-control', 'id'=>'valorTot')); ?>
                 <?php echo $itens_form->error($itens, 'valorTotal'); ?>
             </div>
             
             <?php echo $itens_form->hiddenField($itens, 'orcamentosId'); ?>
 
-            <div class="col-md-2 col-sm-2 col-xs-2">
+            <div class="col-md-2 col-sm-2 col-xs-2" style="padding-top: 1.6em">
                 <?php
                 echo CHtml::submitButton('Inserir Item', array('class' => 'btn btn-primary'));
                 ?> 
