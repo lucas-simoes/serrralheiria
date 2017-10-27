@@ -289,6 +289,7 @@ class OrcamentosController extends Controller
             
             $criteria = new CDbCriteria;
             $criteria->select ='sum(valorTotal) as valorTotal';
+            $criteria->condition = 'orcamentosId = ' . $orcamentosId;
 
             //creating proper SQL
             $sql = Yii::app()->db->commandBuilder->createFindCommand('orc_itens', $criteria)->getText();
