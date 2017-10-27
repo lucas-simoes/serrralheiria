@@ -32,7 +32,7 @@ class OrcamentosController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','create','update','admin','delete','additem', 'dados', 'deleteitem'),
+				'actions'=>array('index','view','create','update','admin','delete','additem', 'dados', 'deleteitem', 'clientes'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -97,6 +97,21 @@ class OrcamentosController extends Controller
             }
         }
         
+        public function actionClientes() {
+            if (isset($_POST['clientes']['clientesId'])) {
+                
+                $cliente = clientes::model()->findByPk($_POST['clientes']['clientesId']);
+                
+                if (isset($cliente)) {
+                    
+                    $json = CJSON::encode($cliente);
+                    
+                    echo $json;
+                }
+            }
+        }
+
+
         public function actionDeleteItem() {
             
             $item = orc_itens::model()->findByPk($_GET['id']);
@@ -180,6 +195,10 @@ class OrcamentosController extends Controller
 		$model=$this->loadModel();
                 
                 $cliente = clientes::model()->findByPk($model->clientesId);
+                
+                if (!isset($cliente)) {
+                    $cliente = new clientes();
+                }
                 
                 $itens = new orc_itens();   
                 

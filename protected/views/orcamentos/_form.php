@@ -1,5 +1,50 @@
 <div class="form">
+    
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Selecionar Cliente</h4>
+      </div>
+      <div class="modal-body">
+            <?php
+                $form_cliente = $this->beginWidget('CActiveForm', array(
+                    'id' => 'clientes-form',
+                    'enableAjaxValidation' => false,
+                ));
+            ?>
+            <div class="form-group row">
+                <div class="col-md-12">
+                <?php echo $form_cliente->dropDownList($cliente, 
+                                                    'clientesId', 
+                                                    CHtml::listData(clientes::model()->findAll(), 'clientesId', 'nome'), 
+                                                    array('class' => 'form-control select2', 
+                                                          'id' => 'clientes', 
+                                                          'empty' => '',
+                                                          'style' => 'width: 100%',
+                                                          'ajax'=>array('type'=>'POST',
+                                                                        'dataType'=>'json',
+                                                                        'url'=> Yii::app()->createUrl('orcamentos/clientes'),
+                                                                        'success'=>'updateCliente',
+
+                                                                  ))); ?>
+               <?php echo $form_cliente->error($cliente, 'clientesId'); ?>
+                </div>
+            </div>
+
+            <?php $this->endWidget(); ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Selecionar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'orcamentos-form',
@@ -26,15 +71,19 @@
 
     <div class="form-group row">
         <div class="col-md-6">
-            <?php echo $form->labelEx($model, 'clientesId'); ?>
-            <?php echo $form->dropdownList($model, 'clientesId', CHtml::listData(clientes::model()->findAll(), 'clientesId', 'nome'), array('class' => 'form-control select2', 'empty' => '', 'style' => 'width: 100%')); ?>
-            <?php echo $form->error($model, 'clientesId'); ?>
+            <?php echo $form->hiddenField($model, 'clientesId', array('id'=>'idCliente')); ?>
+            <?php echo $form->labelEx($model, 'nomeCliente'); ?>
+            <?php echo $form->textField($model, 'nomeCliente', array('class' => 'form-control', 'id'=>'nomeCliente')); ?>
+            <?php echo $form->error($model, 'nomeCliente'); ?>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?php echo $form->labelEx($model, 'telefoneCliente'); ?>
-            <?php echo $form->textField($model, 'telefoneCliente', array('size' => 20, 'maxlength' => 20, 'class' => 'form-control')); ?>
+            <?php echo $form->textField($model, 'telefoneCliente', array('size' => 20, 'maxlength' => 20, 'class' => 'form-control', 'id'=>'telCliente')); ?>
             <?php echo $form->error($model, 'telefoneCliente'); ?>
+        </div>
+        <div class="col-md-2" style="padding-top: 1.6em">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Selecionar Cliente</button>
         </div>
     </div>
 
@@ -248,5 +297,15 @@
         document.getElementById('qtd').value = data.quantidade;
         document.getElementById('valorUn').value = data.valorUnitario;
         document.getElementById('valorTot').value = data.valorTotal;
+    }
+    
+    function lightbox() {
+        document.getElementById('tst').style.display = 'block';
+    }
+    
+    function updateCliente(data) {        
+        document.getElementById('idCliente').value = data.clientesId;
+        document.getElementById('nomeCliente').value = data.nome;
+        document.getElementById('telCliente').value = data.telefone;
     }
 </script>
