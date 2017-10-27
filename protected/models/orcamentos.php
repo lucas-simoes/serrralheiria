@@ -12,6 +12,7 @@
  * @property double $valorMaterial
  * @property double $valorMO
  * @property double $valorTotal
+ * @property string $nomeProduto
  */
 class orcamentos extends CActiveRecord
 {
@@ -31,15 +32,15 @@ class orcamentos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nomeCliente, valorTotal', 'required'),
+			array('nomeCliente, valorTotal, nomeProduto', 'required'),
 			array('clientesId', 'numerical', 'integerOnly'=>true),
 			array('valorMaterial, valorMO, valorTotal', 'numerical'),
-			array('nomeCliente', 'length', 'max'=>80),
+			array('nomeCliente, nomeProduto', 'length', 'max'=>80),
 			array('telefoneCliente', 'length', 'max'=>20),
 			array('validade', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('orcamentosId, clientesId, nomeCliente, telefoneCliente, validade, valorMaterial, valorMO, valorTotal', 'safe', 'on'=>'search'),
+			array('orcamentosId, clientesId, nomeCliente, telefoneCliente, validade, valorMaterial, valorMO, valorTotal, nomeProduto', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +70,7 @@ class orcamentos extends CActiveRecord
 			'valorMaterial' => 'Valor Material',
 			'valorMO' => 'Valor Mão Obra',
 			'valorTotal' => 'Valor Total',
+                        'nomeProduto' => 'Produto',
 		);
 	}
 
@@ -105,6 +107,8 @@ class orcamentos extends CActiveRecord
 		$criteria->compare('valorMO',$this->valorMO);
 
 		$criteria->compare('valorTotal',$this->valorTotal);
+                
+                $criteria->compare('nomeProduto',$this->nomeProduto,true);
 
 		return new CActiveDataProvider('orcamentos', array(
 			'criteria'=>$criteria,

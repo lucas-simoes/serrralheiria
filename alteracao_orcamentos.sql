@@ -1,0 +1,1 @@
+ALTER TABLE `orcamentos` ADD `nomeProduto` VARCHAR(80) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL AFTER `valorTotal`;

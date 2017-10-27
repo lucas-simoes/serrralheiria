@@ -32,6 +32,7 @@ $('.search-form form').submit(function(){
 	'dataProvider'=>$model->search(),
 	'columns'=>array(
 		'orcamentosId',
+                'nomeProduto',
 		'nomeCliente',
 		'telefoneCliente',
                 array(

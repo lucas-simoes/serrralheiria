@@ -56,6 +56,13 @@ class OrcamentosController extends Controller
                 $itens->attributes = $_POST['orc_itens'];
                 
                 if ($itens->save()) {
+                    
+                    $model->setAttribute('valorMaterial', $this->getTotalMaterial($model->orcamentosId));
+
+                    $model->setAttribute('valorTotal', $model->valorMaterial + $model->valorMO);
+                    
+                    $model->save();
+                    
                     $this->redirect(array('update','id'=>$model->orcamentosId));
                 } else {
                     $this->render('update',array(
@@ -101,6 +108,12 @@ class OrcamentosController extends Controller
             $model = orcamentos::model()->findByPk($orcamentosId);
                 
             $cliente = clientes::model()->findByPk($model->clientesId);
+            
+            $model->setAttribute('valorMaterial', $this->getTotalMaterial($model->orcamentosId));
+
+            $model->setAttribute('valorTotal', $model->valorMaterial + $model->valorMO);
+
+            $model->save();
 
             $itens = new orc_itens();   
 
@@ -181,7 +194,11 @@ class OrcamentosController extends Controller
                         
                         $cliente = clientes::model()->findByPk($model->clientesId);
                         
-                        $model->setAttribute('nomeCliente', $cliente->nome);
+                        $model->setAttribute('nomeCliente', isset($cliente)?$cliente->nome:'Consumidor Final');
+                        
+                        $model->setAttribute('valorMaterial', $this->getTotalMaterial($model->orcamentosId));
+                        
+                        $model->setAttribute('valorTotal', $model->valorMaterial + $model->valorMO);
                         
 			if($model->save())
 				$this->redirect(array('update','id'=>$model->orcamentosId));
@@ -267,4 +284,20 @@ class OrcamentosController extends Controller
 			Yii::app()->end();
 		}
 	}
+        
+        function getTotalMaterial($orcamentosId) {
+            
+            $criteria = new CDbCriteria;
+            $criteria->select ='sum(valorTotal) as valorTotal';
+
+            //creating proper SQL
+            $sql = Yii::app()->db->commandBuilder->createFindCommand('orc_itens', $criteria)->getText();
+
+            //fetching data based on created SQL stored in $sql variable
+            $Subscriber = Yii::app()->db->createCommand($sql)->queryRow();
+
+            $totalunSubs = $Subscriber['valorTotal'];
+
+            return $totalunSubs;
+        }
 }

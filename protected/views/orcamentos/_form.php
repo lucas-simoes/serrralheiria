@@ -7,7 +7,6 @@
     ));
     Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/bower_components/select2/dist/js/select2.full.min.js', CClientScript::POS_END);
     Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/orcamentos.js', CClientScript::POS_END);
-    //Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/dist/css/skins/_all-skins.min.css', CClientScript::POS_HEAD);
     ?>
 
     <?php echo $form->errorSummary($model); ?>
@@ -16,6 +15,14 @@
     echo CHtml::hiddenField('psedoMat', 0, array('id' => 'pMat'));
     echo $form->hiddenField($model, 'valorMaterial');
     ?>
+    
+    <div class="form-group row">
+        <div class="col-md-12">
+            <?php echo $form->labelEx($model, 'nomeProduto'); ?>
+            <?php echo $form->textField($model, 'nomeProduto', array('size' => 80, 'maxlength' => 80, 'class' => 'form-control')); ?>
+            <?php echo $form->error($model, 'nomeProduto'); ?>
+        </div>
+    </div>
 
     <div class="form-group row">
         <div class="col-md-6">
@@ -167,8 +174,32 @@
             valorTot.value = 0;
         }
 
-        valorTot.value = parseFloat(valorTot.value) + parseFloat(pMat.value) + parseFloat(valorMo.value);
-    })
+        valorTot.value = parseFloat(pMat.value) + parseFloat(valorMo.value);
+    });
+    
+    $('#qtd').change(function() {
+        var qtd = document.getElementById('qtd');
+        var vlUn = document.getElementById('valorUn');
+        var vlTot = document.getElementById('valorTot');
+        
+        vlTot.value = parseFloat(qtd.value) * parseFloat(vlUn.value);
+    });
+    
+    $('#valorUn').change(function() {
+        var qtd = document.getElementById('qtd');
+        var vlUn = document.getElementById('valorUn');
+        var vlTot = document.getElementById('valorTot');
+        
+        vlTot.value = parseFloat(qtd.value) * parseFloat(vlUn.value);
+    });
+    
+    $('#valorTot').change(function() {
+        var qtd = document.getElementById('qtd');
+        var vlUn = document.getElementById('valorUn');
+        var vlTot = document.getElementById('valorTot');
+        
+        vlUn.value = parseFloat(vlTot.value) / parseFloat(qtd.value);
+    });
 
     /*function confirmation(data) {
         document.getElementById('loading').style.display = 'none';
