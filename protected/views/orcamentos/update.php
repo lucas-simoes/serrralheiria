@@ -6,6 +6,6 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Editar Orcamento # <?php echo $model->orcamentosId; ?></h1>
+<h1>Editar Orçamento # <?php echo $model->orcamentosId; ?></h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model, 'cliente'=>$cliente, 'itens'=>$itens)); ?>

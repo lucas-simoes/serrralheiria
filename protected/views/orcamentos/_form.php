@@ -110,7 +110,8 @@
     <div class="row buttons">
         <div class="col-md-12">
             <?php echo CHtml::submitButton('Salvar Cabeçalho', array('class' => 'btn btn-lg btn-primary')); ?>
-        </div>
+            <?php echo CHtml::link('Impressão', Yii::app()->createUrl('orcamentos/impressao', array('orcamentosId'=>$model->orcamentosId)), array('class'=>'btn btn-lg btn-primary')); ?>
+        </div> 
     </div>
 
     <?php $this->endWidget(); ?>

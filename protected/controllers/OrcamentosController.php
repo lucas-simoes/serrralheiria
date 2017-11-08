@@ -32,7 +32,7 @@ class OrcamentosController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','create','update','admin','delete','additem', 'dados', 'deleteitem', 'clientes'),
+				'actions'=>array('index','view','create','update','admin','delete','additem', 'dados', 'deleteitem', 'clientes', 'impressao'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -173,6 +173,8 @@ class OrcamentosController extends Controller
                         } else {
                             $model->setAttribute('nomeCliente', 'Consumidor Final');    
                         }
+                        
+                        $model->setAttribute('data', date('Y-m-d', time()));
                         
 			if($model->save()) {
                             $this->redirect(array('update','id'=>$model->orcamentosId));
@@ -319,5 +321,23 @@ class OrcamentosController extends Controller
             $totalunSubs = $Subscriber['valorTotal'];
 
             return $totalunSubs;
+        }
+        
+        public function actionImpressao() {
+            
+            if (isset($_GET['orcamentosId'])) {
+                
+                $model = orcamentos::model()->findByPk($_GET['orcamentosId']);
+                
+                $this->render('impressao', array(
+                    'model'=>$model,
+                ));
+                
+            } else {
+                $model=new orcamentos('search');
+                $this->render('admin',array(
+			'model'=>$model,
+		));
+            }
         }
 }

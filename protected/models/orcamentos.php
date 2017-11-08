@@ -37,10 +37,10 @@ class orcamentos extends CActiveRecord
 			array('valorMaterial, valorMO, valorTotal', 'numerical'),
 			array('nomeCliente, nomeProduto', 'length', 'max'=>80),
 			array('telefoneCliente', 'length', 'max'=>20),
-			array('validade', 'safe'),
+			array('validade, data', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('orcamentosId, clientesId, nomeCliente, telefoneCliente, validade, valorMaterial, valorMO, valorTotal, nomeProduto', 'safe', 'on'=>'search'),
+			array('orcamentosId, clientesId, nomeCliente, telefoneCliente, validade, valorMaterial, valorMO, valorTotal, nomeProduto, data', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +71,7 @@ class orcamentos extends CActiveRecord
 			'valorMO' => 'Valor Mão Obra',
 			'valorTotal' => 'Valor Total',
                         'nomeProduto' => 'Produto',
+                        'data' => 'Data'
 		);
 	}
 
@@ -109,6 +110,8 @@ class orcamentos extends CActiveRecord
 		$criteria->compare('valorTotal',$this->valorTotal);
                 
                 $criteria->compare('nomeProduto',$this->nomeProduto,true);
+                
+                $criteria->compare('data',$this->data,true);
 
 		return new CActiveDataProvider('orcamentos', array(
 			'criteria'=>$criteria,
